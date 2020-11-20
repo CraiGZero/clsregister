@@ -1,7 +1,7 @@
 {
   "name": "clsregister",
   "title": "ClassName Register",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "keywords": [
     "ClassName",
     "css",
@@ -17,7 +17,7 @@
     "test": "jest"
   },
   "bin": {
-    "clsregister": "./src/index.js"
+    "clsregister": "./bin/clsregister.js"
   },
   "bugs": {
     "url": "https://github.com/CraiGZero/clsregister/issues"
