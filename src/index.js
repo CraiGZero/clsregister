@@ -15,7 +15,7 @@ class ClsContext {
   }
 
   getClassNames = () => {
-    return this.classNames
+    return [...this.classNames]
   }
   /**
    * 读取filePath中的写入路径，并写入对应目录
