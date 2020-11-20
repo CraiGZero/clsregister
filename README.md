@@ -1,8 +1,6 @@
- <h1 align="center">ClassName Register</h1>
+# ClassName Register
  
- <div align="center">
- 
- 通过配置来生成符合“姓氏命名法”的className对象。
+通过配置来生成符合“姓氏命名法”的className对象。
 
 
 ## 配置内容
