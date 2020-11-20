@@ -21,6 +21,9 @@ class ClsContext {
    * 读取filePath中的写入路径，并写入对应目录
    */
   writeFile = (data) => {
+    if(typeof data!=='string'){
+      throw new Error(`写入${this.fileName}文件错误！writeFile函数只接受string属性`);
+    }
     const fileName = this.fileName
     const fullPath = resolveSrc(`${this.path}/${fileName}`);
 
