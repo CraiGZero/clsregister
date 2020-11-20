@@ -1,0 +1,28 @@
+{
+  "name": "clsregister",
+  "title": "ClassName Register",
+  "version": "1.0.0",
+  "keywords": [
+    "ClassName",
+    "css",
+    "style",
+    "react",
+    "components",
+    "react",
+    "react-component"
+  ],
+  "description": "通过配置来生成符合“姓氏命名法”的className对象",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "bin": {
+    "clsregister": "./src/index.js"
+  },
+  "author": "CraiG",
+  "license": "ISC",
+  "dependencies": {
+    "camelcase": "^6.2.0",
+    "jest": "^26.6.3"
+  }
+}
