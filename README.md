@@ -117,31 +117,52 @@ module.exports = {
 >middlewares的每一个元素都必须是一个函数，函数会接受到一个ctx对象和一个next函数
 
 ##### ctx对象包含属性
-私有属性 | 类型 | 描述 |
---- | --- | --- | 
-register | Function | 接受三个值（path:string,filename:sting,handler:function） | 
-getClassNames | Function | 接受一个值（filename:string）,返回构建完成的classNames | 
-writeFile | Function | 接受两个值（filename:string,data:string）,会执行写入操作，将文件名写入之前定义的目录中。 | 
+属性 |  类型 | 接收参数| 描述 |
+--- | --- | --- |  --- | 
+register | Function | path:string,filename:sting,handler:function |会返回当前注册成功的实例 | 
+getClassNames | Function | -- | 根据注册在register上的handler，返回string[]。可以请根据自己需求，组合成符合需求的数据。 | 
+writeFile | Function | data:string | 会根据传入参数，执行写入操作。文件最终会生成在注册时填写的目录中。 |
+ 
+##### register入参解释
+参数 |  类型 | 描述 |
+--- | --- | --- |  
+path | String | 写入配置的目标路径，以当前根目录（process.cwd()）为起点 | 
+filename | String | 文件名 ，如出现同名文件会被覆盖，注册前请确认。| 
+handler | Function |  处理配置文件过程中，会将配置中的classNames拆分成数组，数组长度为所有注册的keys + 所有children。
+该函数类似于Array.prototype.map方法。接收key与value，用户可以根据自己的实际应用场景，来决定返回什么样的字符串。最终会根据handler生成对应的ClassNames，可以通过当前注册实例上的getClassNames获取到。
+ |
+ 
+##### next方法
+>注册成功后，需要调用```next()```来告知处理器向下执行。 直至执行到最后一个中间件。全部中间件执行完成以后，会将所需数据挂载至对应实例上。
+>所以需要在next()方法调用后再写数据处理逻辑，否则是获取不到对应数据的。
 
-##### 基础定义
+##### 使用方法
 ```jsx
 (ctx, next) => {
-      ctx.register(
-        'src/config/className',
-        'cls.js',
-        (key, value) => {
-          return `  ${key}: '${value}'`;
-        },
-      );
-      next();
-      const data = `export default {\n${ctx.getClassNames('cls.js').join(',\n')}\n};`;
-      ctx.writeFile('cls.js', data);
+  const _ctx = ctx.register(
+    'src/config/className',
+    'cls.js',
+    (key, value) => {
+      return `  ${key}: '${value}'`;
+    },
+  );
+  next();
+  const data = `export default {\n${_ctx.getClassName().join(',\n')}\n};`;
+  _ctx.writeFile(data);
 }
 ```
-> 此时layout字段会被注册，并生成带有命名空间前缀的className
-> 最终生成
-```js
-{
-  layout:'craig-layout'
-};
+如果需要异步处理，可使用：
+```jsx
+async (ctx, next) => {
+  const _ctx = ctx.register(
+    'src/config/className',
+    'cls.js',
+    (key, value) => {
+      return `  ${key}: '${value}'`;
+    },
+  );
+  await next();
+  const data = `export default {\n${_ctx.getClassName().join(',\n')}\n};`;
+  _ctx.writeFile(data);
+}
 ```
