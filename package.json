@@ -19,6 +19,13 @@
   "bin": {
     "clsregister": "./src/index.js"
   },
+  "bugs": {
+    "url": "https://github.com/CraiGZero/clsregister/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CraiGZero/clsregister"
+  },
   "author": "CraiG",
   "license": "ISC",
   "dependencies": {
