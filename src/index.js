@@ -22,8 +22,7 @@ class ClsContext {
    */
   writeFile = (data) => {
     const fileName = this.fileName
-    const current = this.handler.get(fileName);
-    const fullPath = resolveSrc(`${current.path}/${fileName}`);
+    const fullPath = resolveSrc(`${this.path}/${fileName}`);
 
     fs.writeFile(fullPath,
       data,
@@ -33,7 +32,7 @@ class ClsContext {
         console.log(`${fileName} file generated successfully`);
       });
   };
-  
+
   addClassName = (className) => {
     this.classNames.push(className)
   }
@@ -45,12 +44,9 @@ class ClsBuilder {
     this.className = className;
     // 格式化以後的className
     this.formatedCls = [];
-    // [function]
-    // this.middlewares = new Map();
     this.middlewares = [];
     this.handler = new Map();
     // [[filename],[path]]
-    this.filePath = [];
     this.formatConfig();
   }
 
@@ -182,4 +178,7 @@ middlewares.forEach(fn => {
   cls.use(fn);
 });
 
-cls.output();
+module.exports = {
+  run: cls.output
+}
+
