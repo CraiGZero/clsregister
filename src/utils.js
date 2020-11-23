@@ -36,24 +36,29 @@ function compose(middlewares) {
   };
 }
 
-function baseBuilder(handler,builder) {
+function baseBuilder(handler, builder) {
   return function (path, filename) {
     return (ctx, next) => {
       const _ctx = ctx.register(
         path,
         filename,
         handler,
-        
       );
       next();
-      const data =builder(_ctx.getClassNames()) ;
+      const data = builder(_ctx.getClassNames());
       _ctx.writeFile(data);
     }
   }
+}
+
+function fileTypeChecker(filename, type) {
+  const reg = new RegExp(`.${type}$`)
+  return reg.test(filename)
 }
 
 module.exports = {
   compose,
   resolveSrc,
   baseBuilder,
+  fileTypeChecker
 }
