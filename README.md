@@ -2,8 +2,24 @@
  
 通过配置来生成符合“姓氏命名法”的className对象。
 
-##
-请在项目根目录新增```clsregister.config.js```文件来进行配置。
+## 📦 安装
+```bash
+npm install clsregister --save-dev
+```
+
+```bash
+yarn add clsregister --dev
+```
+
+## 使用方法
+- 请在项目根目录新增```clsregister.config.js```文件来进行配置。
+- 同时在package.json新增一条scripts
+```json
+"scripts": {
+    +  "run-clsregister": "clsregister"
+  }
+```
+
 
 ## 配置内容
 
@@ -25,7 +41,7 @@ middlewares | Function[] | 生成不同类型的文件，需要配置不同的�
 ## 🔨 示例
 
 ##### 基础定义
-```jsx
+```js
 module.exports = {
   namespace: 'craig',
   className: {
@@ -42,7 +58,7 @@ module.exports = {
 ```
 
 ##### 嵌套组合
-```jsx
+```js
 module.exports = {
   namespace: 'craig',
   className: {
@@ -63,7 +79,7 @@ module.exports = {
  ```
 
 >如果担心nav容易与其他key值重复，可以添加```_scoped_```属性
-```jsx
+```js
 module.exports = {
   namespace: 'craig',
   className: {
@@ -83,7 +99,7 @@ module.exports = {
 
 > 按上述写法，如果key值较多，且都无子属性，则可以使用```_children_```和```_scopedChildren_```属性来简写
 
-```jsx
+```js
 module.exports = {
   namespace: 'craig',
   className: {
@@ -139,7 +155,7 @@ handler | Function |  处理配置文件过程中，会将配置中的classNames
 >所以需要在next()方法调用后再写数据处理逻辑，否则是获取不到对应数据的。
 
 ##### 使用方法
-```jsx
+```js
 (ctx, next) => {
   const _ctx = ctx.register(
     'src/config/className',
@@ -154,7 +170,7 @@ handler | Function |  处理配置文件过程中，会将配置中的classNames
 }
 ```
 如果需要异步处理，可使用：
-```jsx
+```js
 async (ctx, next) => {
   const _ctx = ctx.register(
     'src/config/className',
@@ -168,3 +184,40 @@ async (ctx, next) => {
   _ctx.writeFile(data);
 }
 ```
+
+## 🆕 fastRegister快速注册中间件
+
+可以通过引用fastRegister对象中的中间件生成器来快速生成中间件。
+配置可以简化成
+```js
++ const {fastRegister} = require('clsregister')
+module.exports = {
+  namespace: 'craig',
+  className: {
+    layout: {
+      _children_: ['main', 'right'],
+      _scopedChildren_: ['mains', 'rights'],
+      nav: {},
+      left: {
+        _scoped_: true,
+      },
+    },
+  },
+  middlewares: [
+  - (ctx, next) => {
+  -  const _ctx = ctx.register(
+  -   'src/config/className',
+  -   'cls.js',
+  -   (key, value) => {
+  -      return `  ${key}: '${value}'`;
+  -     },
+  -   );
+  -   next();
+  -   const data = `export default {\n${_ctx.getClassNames().join(',\n')}\n};`;
+  -    _ctx.writeFile(data);
+  -   },
+  + fastRegister.js('src/config/className','cjs.less'),
+  ],
+};
+```
+`fastRegister`目前包含`js`、`less`、`sass`三类文件的中间件生成器。
