@@ -217,7 +217,7 @@ module.exports = {
   -   const data = `export default {\n${_ctx.getClassNames().join(',\n')}\n};`;
   -    _ctx.writeFile(data);
   -   },
-  + fastRegister.js('src/config/className','cjs.less'),
+  + fastRegister.js('src/config/className','cjs.js'),
   ],
 };
 ```
