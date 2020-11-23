@@ -36,7 +36,24 @@ function compose(middlewares) {
   };
 }
 
+function baseBuilder(handler,builder) {
+  return function (path, filename) {
+    return (ctx, next) => {
+      const _ctx = ctx.register(
+        path,
+        filename,
+        handler,
+        
+      );
+      next();
+      const data =builder(_ctx.getClassNames()) ;
+      _ctx.writeFile(data);
+    }
+  }
+}
+
 module.exports = {
   compose,
-  resolveSrc
+  resolveSrc,
+  baseBuilder,
 }

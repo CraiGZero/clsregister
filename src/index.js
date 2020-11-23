@@ -1,6 +1,7 @@
 const fs = require('fs');
 const camelcase = require('camelcase');
 const {compose, resolveSrc} = require('./utils');
+const fastRegister = require('./fastRegister');
 
 const defaultConfig = require(resolveSrc('clsregister.config.js'));
 
@@ -182,6 +183,7 @@ middlewares.forEach(fn => {
 });
 
 module.exports = {
-  run: cls.output
+  run: cls.output,
+  fastRegister
 }
 
