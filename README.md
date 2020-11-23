@@ -35,8 +35,8 @@ middlewares | Function[] | 生成不同类型的文件，需要配置不同的�
 --- | --- | --- | 
 ```key``` | String | 对象的key，只要出现定义，就会注册至集合中。不允许出现重复值！ | 
 ```key._scoped_```   | Boolean  | 设置此属性为true，会自动与上级Key值进行拼接。 | 
-```key._children_``` | String[] | 如需要注册的className不需要携带任何属性，可以挂载在此属性上。 | 
-```key._scopedChildren_``` | String[] | 包含的所有className注册时都会携带_scoped_。 | 
+```key._children_``` | String[] | 如需要注册子className不需要携带任何属性，可以挂载在此属性上。 | 
+```key._scopedChildren_``` | String[] | 注册的子className都会携带_scoped_熟悉。 | 
 
 ## 🔨 示例
 
@@ -187,10 +187,11 @@ async (ctx, next) => {
 
 ## 🆕 fastRegister快速注册中间件
 
-可以通过引用fastRegister对象中的中间件生成器来快速生成中间件。
-配置可以简化成
+可以通过引用fastRegister对象，使用中间件生成器来快速生成中间件。
+
+如此配置便可以简化为：
 ```js
-+ const {fastRegister} = require('clsregister')
++ const fastRegister = require('clsregister/fastRegister')
 module.exports = {
   namespace: 'craig',
   className: {
