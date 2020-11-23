@@ -1,4 +1,5 @@
 // demo
+const {fastRegister} = require('clsregister')
 module.exports = {
   namespace: 'craig',
   className: {
@@ -24,17 +25,6 @@ module.exports = {
       const data = `export default {\n${_ctx.getClassNames().join(',\n')}\n};`;
       _ctx.writeFile(data);
     },
-    (ctx, next) => {
-      const _ctx = ctx.register(
-        'src/config/className',
-        'cls.less',
-        (key, value) => {
-          return `@${key}: '${value}';`;
-        },
-      );
-      next();
-      const data = _ctx.getClassNames().join('\n');
-      _ctx.writeFile(data);
-    },
+    fastRegister.less('src/config/className','cjs.less'),
   ],
 };
