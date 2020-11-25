@@ -133,6 +133,15 @@ class ClsBuilder {
   }
 
   midRegister = (path, fileName, handler) => {
+    if (!path) {
+      throw new Error(`未接收到path参数`);
+    }
+    if (!fileName) {
+      throw new Error(`未接收到fileName参数`);
+    }
+    if (!handler) {
+      throw new Error(`未接收到handler参数`);
+    }
     if (this.handler.has(fileName)) {
       throw new Error(`处理${fileName}文件的handler已存在！`);
     }
