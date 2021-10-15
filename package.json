@@ -11,7 +11,7 @@
     "react",
     "react-component"
   ],
-  "description": "通过配置来生成符合“姓氏命名法”的className对象",
+  "description": "通过配置来生成符合“BEM规范”的className",
   "main": "./src/index.js",
   "scripts": {
     "test": "jest"

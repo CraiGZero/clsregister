@@ -1,6 +1,6 @@
 # ClassName Register
- 
-通过配置来生成符合“姓氏命名法”的className对象。
+
+通过js对象来描述DOM的嵌套结构，并根据js对象生成符合BEM规范的className。
 
 ## 📦 安装
 ```bash
@@ -36,7 +36,7 @@ middlewares | Function[] | 生成不同类型的文件，需要配置不同的�
 ```key``` | String | 对象的key，只要出现定义，就会注册至集合中。不允许出现重复值！ | 
 ```key._scoped_```   | Boolean  | 设置此属性为true，会自动与上级Key值进行拼接。 | 
 ```key._children_``` | String[] | 如需要注册子className不需要携带任何属性，可以挂载在此属性上。 | 
-```key._scopedChildren_``` | String[] | 注册的子className都会携带_scoped_熟悉。 | 
+```key._scopedChildren_``` | String[] | 注册的子className都会携带_scoped_属性。 | 
 
 ## 🔨 示例
 
